@@ -7,20 +7,21 @@ const newYearCard = document.getElementById("newYearCard");
 const fallingContainer = document.getElementById("fallingContainer");
 const stopMusicBtn = document.getElementById("stopMusicBtn");
 const slideshowImages = [
-    "https://via.placeholder.com/300x200?text=Image+1",
-    "https://via.placeholder.com/300x200?text=Image+2",
-    "https://via.placeholder.com/300x200?text=Image+3",
-    "https://via.placeholder.com/300x200?text=Image+4"
+    "https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp10.jpg",
+    "https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp12.jpg",
+    "https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp13.jpg",
+    "https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp8.jpg"
 ];
 let currentSlideIndex = 0;
 
 let audio;
 
 const messages = [
-    "Cheers to a wonderful year ahead filled with love, joy, and new adventures!",
+    "Happy New Year My Love❤️",
     "May this New Year bring new opportunities and endless possibilities!",
     "Celebrate every moment and make memories to cherish forever!",
-    "Here's to health, happiness, and success in the coming year!"
+    "Here's to health, happiness, and success in the coming year!",
+    "And Moi xodai tumar logot thakibo bisaru my cutuu Munu,Please mor logot xodai thakiba na"
 ];
 
 const now = new Date();
@@ -59,7 +60,7 @@ function updateCountdown() {
 
 function playMusic() {
     if (!audio) {
-        audio = new Audio("test-music.mp3"); // Add your music file here
+        audio = new Audio("./Audio.mp3"); // Add your music file here
         audio.loop = true;
     }
     audio.play();
