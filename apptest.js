@@ -1,3 +1,4 @@
+const messageElement = document.getElementById("message");
 const newYearCard = document.getElementById("newYearCard");
 const fallingContainer = document.getElementById("fallingContainer");
 const stopMusicBtn = document.getElementById("stopMusicBtn");
@@ -15,7 +16,7 @@ const messages = [
     "May this New Year bring new opportunities and endless possibilities!",
     "Celebrate every moment and make memories to cherish forever!",
     "Here's to health, happiness, and success in the coming year!",
-    "And Moi xodai tumar logot thakibo bisaru my cutuu Munu,Please mor logot xodai thakiba na"
+    "And Moi xodai tumar logot thakibo bisaru my cutuu Munu, Please mor logot xodai thakiba na"
 ];
 
 function playMusic() {
@@ -55,7 +56,7 @@ function celebrate() {
     if (descriptionElement) {
         descriptionElement.textContent = messages[Math.floor(Math.random() * messages.length)];
         descriptionElement.classList.add("showContent");
-        
+
         setTimeout(() => {
             descriptionElement.classList.remove("showContent");
         }, 4000); // Keep the message visible for 4 seconds
