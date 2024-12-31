@@ -52,7 +52,7 @@ function updateCountdown() {
 
 function playMusic() {
     if (!audio) {
-        audio = new Audio(""); // Add your music file here
+        audio = new Audio("./Audio.mp3"); // Add your music file here
         audio.loop = true;
     }
     audio.play();
