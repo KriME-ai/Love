@@ -17,6 +17,12 @@ const messages = [
 let currentSlideIndex = 0;
 let audio;
 
+// Set dynamic background
+document.body.style.backgroundImage = "url('https://i.pinimg.com/originals/a0/a0/16/a0a01608a0386ad052a15a5af8196be7.png')";
+document.body.style.backgroundSize = "cover";
+document.body.style.backgroundRepeat = "no-repeat";
+document.body.style.backgroundPosition = "center";
+
 // Play music
 function playMusic() {
     if (!audio) {
@@ -86,4 +92,4 @@ document.addEventListener("DOMContentLoaded", () => {
     celebrate();
     startSlideshow();
 });
-        
+            
