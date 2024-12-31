@@ -1,4 +1,3 @@
-const messageElement = document.getElementById("message");
 const newYearCard = document.getElementById("newYearCard");
 const fallingContainer = document.getElementById("fallingContainer");
 const stopMusicBtn = document.getElementById("stopMusicBtn");
@@ -9,7 +8,6 @@ const slideshowImages = [
     "https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp8.jpg"
 ];
 let currentSlideIndex = 0;
-
 let audio;
 
 const messages = [
@@ -54,11 +52,16 @@ function celebrate() {
     }
 
     const descriptionElement = document.querySelector(".card-description");
-    descriptionElement.classList.add("showContent");
-    descriptionElement.textContent = messages[Math.floor(Math.random() * messages.length)];
-    setTimeout(() => {
-        descriptionElement.classList.remove("showContent");
-    }, 1200);
+    if (descriptionElement) {
+        descriptionElement.textContent = messages[Math.floor(Math.random() * messages.length)];
+        descriptionElement.classList.add("showContent");
+        
+        setTimeout(() => {
+            descriptionElement.classList.remove("showContent");
+        }, 4000); // Keep the message visible for 4 seconds
+    } else {
+        console.error("Element with class 'card-description' not found.");
+    }
 }
 
 function startSlideshow() {
