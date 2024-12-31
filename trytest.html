@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year</title>
+    <link rel="stylesheet" href="stylestest2.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="message">Waiting for the New Year...</h1>
+        <div id="countdown">
+            <span id="days">00</span> Days 
+            <span id="hours">00</span> Hours 
+            <span id="minutes">00</span> Minutes 
+            <span id="seconds">00</span> Seconds
+        </div>
+    </div>
+    <!-- New Year Card -->
+    <div class="card" id="newYearCard" style="display: none;">
+        <img src="https://via.placeholder.com/300x200" alt="Celebration Image" class="card-img">
+        <div class="card-content">
+            <h2 class="card-title">🎉 Happy New Year! 🎉</h2>
+            <p class="card-description">
+                Wishing you a fantastic year ahead filled with joy, love, and success. Let's make this year amazing together!
+            </p>
+            <button class="card-btn" onclick="celebrate()">Celebrate</button>
+            <button class="card-btn" id="stopMusicBtn" onclick="stopMusic()" style="display: none;">Stop Music</button>
+        </div>
+    </div>
+    <!-- Container for falling animations -->
+    <div id="fallingContainer"></div>
+    <script src="app2.js"></script>
+</body>
+</html>
