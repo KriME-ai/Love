@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ff9a9e;
+    }
+
+    video {
+      width: 90%;
+      max-width: 800px;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #ff9a9e;
+      color: #fff;
+    }
+
+    button:hover {
+      background: #d32f2f;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      video {
+        width: 100%;
+        border-width: 2px;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Enjoy the Video</h1>
+    <video id="video" controls>
+      <source src="WhatsAppVideo1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="controls">
+      <button onclick="playVideo()">Play</button>
+      <button onclick="pauseVideo()">Pause</button>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+
+    function playVideo() {
+      video.play();
+    }
+
+    function pauseVideo() {
+      video.pause();
+    }
+  </script>
+</body>
+</html>
