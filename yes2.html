@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Timeline</title>
+    <style>
+        /* Keep previous base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Keep previous body, hearts-container, and animation styles */
+        body {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hearts-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Previous heart animations remain the same */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: floatHeart 6s ease-in infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            border-radius: 8px 8px 0 0;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(-45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .heart::after {
+            transform: rotate(45deg);
+            transform-origin: 0 100%;
+        }
+
+        /* Previous container and hero styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .photo-container {
+            flex: 0 0 300px;
+            height: 400px;
+            background: #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+            margin: 0 auto;
+        }
+
+        .photo-container:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .intro h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Updated Timeline Styles for Left-Right Layout */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, #2c3e50 0%, #3498db 100%);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 15px 30px;
+            position: relative;
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .timeline-content {
+            position: relative;
+            width: calc(50% - 30px);
+            display: flex;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Left side timeline items */
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+            flex-direction: row-reverse;
+        }
+
+        /* Right side timeline items */
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        /* Timeline dots */
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 50%;
+            top: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Position dots for left and right items */
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -50px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -50px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-image {
+            flex: 0 0 120px;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-image:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .timeline-content-text {
+            flex: 1;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .hero {
+                padding: 1rem;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .photo-container {
+                flex: 0 0 100%;
+                height: 300px;
+                transform: none;
+                margin-bottom: 1rem;
+            }
+
+            .intro h1 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .intro p {
+                text-align: center;
+                font-size: 0.95rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 70px);
+                margin-left: 70px !important;
+                flex-direction: column !important;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -39px;
+            }
+
+            .timeline-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .timeline-date {
+                font-size: 1.1rem;
+            }
+
+            .timeline-text {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Keep previous animations */
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container"></div>
+
+    <div class="container">
+        <!-- Hero section remains the same -->
+        <div class="hero">
+            <div class="photo-container">
+                <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsAppR1.jpg" alt="Profile Photo">
+            </div>
+            <div class="intro">
+                <h1>Rimli Pathak(Miss Introvert)</h1>
+                <p>A girl who smiles like sunshine when she's happy, with a warmth that melts my worries away. A girl whose sad smile is soft and beautiful, like a quiet melody that tugs at my heart. A girl whose angry smile is fierce and captivating, a spark that shows her fire within. No matter the emotion, her smile is a story I never get tired of reading.</p>
+            </div>
+        </div>
+
+        <!-- Updated Timeline with alternating layout -->
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp8.jpg" alt="Forever">
+                    </div>
+                    <div class="timeline-content-text">
+                        <div class="timeline-date">Forever My Happiness ❤️</div>
+                        <div class="timeline-text">
+                            <p>You are Forever My Happiness ❤️ because, with you, every moment feels like a beautiful memory in the making. Your laughter is the sweetest sound, bringing light to even my darkest days. You understand me in a way no one else ever has, making me feel seen, loved, and truly at home. With just one smile, you turn my worries into warmth, and with your love, you make my world complete. No matter what life brings, having you by my side is all I’ll ever need. 💖</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsAppR2.jpg" alt="Smile">
+                    </div>
+                    <div class="timeline-content-text">
+                        <div class="timeline-date">Holding Her Hand, Holding My World 🌍</div>
+                        <div class="timeline-text">
+                            <p>Holding your hand means holding my world, because in your touch, I find love, warmth, and a sense of home. Every time our fingers intertwine, I feel the unspoken promise that we are in this together, no matter what. Your hand in mine is a reminder that I am never alone, that I have someone who loves me just as deeply as I love them. With every step we take, side by side, I know that as long as I’m holding your hand, I’m holding everything that truly matters. 🌍❤️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp13.jpg" alt="2019 Project">
+                    </div>
+                    <div class="timeline-content-text">
+                        <div class="timeline-date">Your Love is My Greatest Blessing 🙏❤️</div>
+                        <div class="timeline-text">
+                            <p>Your love is my greatest blessing because it fills my life with warmth, meaning, and endless joy. It’s in the way you care, the way you understand me without words, and the way you stand by my side through every high and low. With your love, I feel stronger, happier, and more at peace, knowing I have someone so special to share my life with. You love me in a way that feels pure and unconditional, and for that, I am forever grateful. Having you is a gift I’ll never take for granted. 🙏❤️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsAppR3.jpg" alt="2017 Project">
+                    </div>
+                    <div class="timeline-content-text">
+                        <div class="timeline-date">You are my Always & Forever 💘</div>
+                        <div class="timeline-text">
+                            <p>You are my Always & Forever 💘 because my love for you knows no limits. Through every smile, every tear, every moment, you are the one my heart beats for. No matter where life takes us, I know I’ll always want you by my side. You are my best friend, my love, my safe place—the one who makes every day brighter just by being in it. With you, forever isn’t just a promise; it’s the only future I can ever imagine. ❤️✨</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Keep the hearts animation script
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.opacity = Math.random();
+            document.querySelector('.hearts-container').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

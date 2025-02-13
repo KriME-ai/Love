@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+            min-height: 100vh;
+            min-height: 100dvh; /* For mobile browsers */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: #ff4776;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            padding: 0 1rem;
+        }
+
+        .heart-image {
+            width: min(200px, 50vw);
+            height: min(200px, 50vw);
+            margin: 1.5rem auto;
+            position: relative;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: clamp(1rem, 3vw, 2rem);
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+            touch-action: manipulation;
+        }
+
+        .btn-yes {
+            background: #ff4776;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 71, 118, 0.3);
+            min-width: 120px;
+        }
+
+        .btn-yes:hover, .btn-yes:focus {
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background: #f8f8f8;
+            color: #666;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        /* Floating hearts background */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 20px;
+            animation: float 6s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* SVG Heart */
+        .heart-svg {
+            fill: #ff4776;
+            filter: drop-shadow(0 4px 10px rgba(255, 71, 118, 0.3));
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .buttons {
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        /* Prevent text selection */
+        .container, .btn {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Hide overflow on mobile */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Reduce animations on devices that prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .heart-image {
+                animation: none;
+            }
+            
+            .floating-heart {
+                animation-duration: 12s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        
+        <div class="heart-image">
+            <svg class="heart-svg" viewBox="0 0 512 512">
+                <path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/>
+            </svg>
+        </div>
+
+        <div class="buttons">
+            <a href="yes2.html" class="btn btn-yes">Yes</a>
+            <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Improved No button movement for both mouse and touch
+        const noBtn = document.getElementById('noBtn');
+        const moveButton = () => {
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate available space
+            const maxX = window.innerWidth - btnRect.width;
+            const maxY = window.innerHeight - btnRect.height;
+            
+            // Generate random position
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            // Ensure button stays within viewport
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${Math.min(Math.max(0, randomX), maxX)}px`;
+            noBtn.style.top = `${Math.min(Math.max(0, randomY), maxY)}px`;
+        };
+
+        // Handle both mouse and touch events
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // Optimized floating hearts creation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤';
+            
+            // Randomize position and size
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            const heartsContainer = document.getElementById('floatingHearts');
+            heartsContainer.appendChild(heart);
+            
+            // Clean up after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Reduce heart creation frequency on mobile
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const heartInterval = setInterval(createFloatingHeart, isMobile ? 500 : 300);
+
+        // Clean up on page hide/unload
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(heartInterval);
+            }
+        });
+    </script>
+</body>
+</html>
