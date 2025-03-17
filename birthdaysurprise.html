@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Birthday Video</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #120029;
+            color: white;
+            height: 100vh;
+            overflow: auto;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .surprise {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1;
+            padding: 20px 0;
+        }
+        
+        .surprise h1 {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 100, 150, 0.8);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .surprise-content {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            color: #333;
+            box-shadow: 0 0 30px rgba(255, 100, 150, 0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out 0.5s forwards;
+            opacity: 0;
+        }
+        
+        .surprise-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .video-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 100, 150, 0.5);
+        }
+        
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: linear-gradient(135deg, #ff6b95, #ff4d7a);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 77, 122, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 77, 122, 0.6);
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="fireworks" id="fireworks"></div>
+    
+    <div class="surprise">
+        <h1>Happy Birthday!</h1>
+        <div class="surprise-content">
+            <p>🎉 To the most amazing person in my life! 🎉</p>
+            <p>Ata just xoru normal video for you my love❤️</p>
+            
+            <div class="video-container">
+                <!-- Replace this with your actual video. This is a placeholder for demonstration -->
+                <video controls autoplay poster="/api/placeholder/700/400" id="birthdayVideo">
+                    <source src="special.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <p>I hope this video brings a smile to your face and shows you just how much you mean to me.</p>
+            <p>I love you more than words can express</p>
+            <p>Happy Birthday, my love ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.backgroundColor = 'white';
+            star.style.borderRadius = '50%';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.opacity = Math.random() * 0.7 + 0.3;
+            star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite`;
+            starsContainer.appendChild(star);
+        }
+        
+        // Fireworks
+        const fireworksContainer = document.getElementById('fireworks');
+        
+        // Start fireworks automatically
+        createFireworks();
+        
+        function createFireworks() {
+            setInterval(() => {
+                launchFirework();
+            }, 800);
+        }
+        
+        function launchFirework() {
+            const firework = document.createElement('div');
+            firework.style.position = 'absolute';
+            
+            // Random position at bottom of screen
+            const startX = Math.random() * window.innerWidth;
+            const endX = startX + (Math.random() * 200 - 100);
+            const endY = Math.random() * window.innerHeight * 0.6;
+            
+            firework.style.left = startX + 'px';
+            firework.style.bottom = '0';
+            firework.style.width = '3px';
+            firework.style.height = '3px';
+            firework.style.backgroundColor = '#fff';
+            firework.style.borderRadius = '50%';
+            firework.style.boxShadow = '0 0 2px #fff';
+            
+            fireworksContainer.appendChild(firework);
+            
+            // Launch animation
+            const launchDuration = Math.random() * 500 + 500;
+            firework.animate([
+                { bottom: '0', left: startX + 'px', opacity: 1 },
+                { bottom: endY + 'px', left: endX + 'px', opacity: 0.8 }
+            ], { 
+                duration: launchDuration, 
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+            
+            // Explosion
+            setTimeout(() => {
+                firework.remove();
+                createExplosion(endX, endY);
+            }, launchDuration);
+        }
+        
+        function createExplosion(endX, endY) {
+            const colors = ['#ff4d7a', '#ff6b95', '#ffcad4', '#fff', '#ffb6c1', '#ff85a2'];
+            const particleCount = Math.floor(Math.random() * 30) + 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.left = endX + 'px';
+                particle.style.top = (window.innerHeight - endY) + 'px';
+                particle.style.width = '3px';
+                particle.style.height = '3px';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderRadius = '50%';
+                particle.style.boxShadow = `0 0 2px ${particle.style.backgroundColor}`;
+                
+                fireworksContainer.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 100 + 50;
+                const targetX = endX + Math.cos(angle) * speed;
+                const targetY = (window.innerHeight - endY) + Math.sin(angle) * speed;
+                
+                particle.animate([
+                    { left: endX + 'px', top: (window.innerHeight - endY) + 'px', opacity: 1, transform: 'scale(1)' },
+                    { left: targetX + 'px', top: targetY + 'px', opacity: 0, transform: 'scale(0)' }
+                ], {
+                    duration: Math.random() * 1000 + 500,
+                    easing: 'cubic-bezier(0,0,0.24,1)',
+                    fill: 'forwards'
+                });
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    particle.remove();
+                }, 1500);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if video source needs to be set dynamically
+            const birthdayVideo = document.getElementById('birthdayVideo');
+            if (birthdayVideo.getAttribute('src') === 'your-video-file.mp4') {
+                console.log('Remember to replace the video source with your actual video file.');
+            }
+            
+            // Try to autoplay the video
+            try {
+                birthdayVideo.play().catch(e => {
+                    console.log('Auto-play prevented by browser:', e);
+                });
+            } catch (e) {
+                console.log('Video playback error:', e);
+            }
+        });
+    </script>
+</body>
+</html>
