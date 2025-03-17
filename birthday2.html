@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday to My Love</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff6f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ff6b95, #ffa1c0);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .heart-icon {
+            font-size: 1.5em;
+            margin: 0 8px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .birthday-message {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 2s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .birthday-message h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #ff4d7a;
+        }
+        
+        .birthday-message p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(255, 105, 150, 0.15);
+            position: relative;
+        }
+        
+        .card:before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #ff6b95;
+            border-radius: 50%;
+        }
+        
+        .card h2 {
+            color: #ff4d7a;
+            text-align: center;
+            margin-top: 0;
+        }
+        
+        .memories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+        
+        .memory-box {
+            flex-basis: 30%;
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .memory-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .memory-image {
+            height: 180px;
+            background-color: #ffd6e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff6b95;
+        }
+        .memory-image img{
+            height: 180px;
+            width: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        
+        .reasons {
+            counter-reset: reason-counter;
+        }
+        
+        .reason {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            position: relative;
+            padding-left: 60px;
+        }
+        
+        .reason:before {
+            counter-increment: reason-counter;
+            content: counter(reason-counter);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff6b95;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .playlist {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .song {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .song:hover {
+            background-color: #ffd6e0;
+        }
+        
+        .song-number {
+            margin-right: 15px;
+            background-color: #ff6b95;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+        
+        .cake-container {
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .cake {
+            width: 200px;
+            height: 200px;
+            background-color: #ffd6e0;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            color: #ff4d7a;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b95, #ff4d7a);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 77, 122, 0.3);
+            transition: transform 0.3s;
+            margin: 10px;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #ff6b95;
+            color: white;
+            margin-top: 50px;
+        }
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .music-player.minimized {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            padding: 0;
+            justify-content: center;
+        }
+        .player-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff4d7a;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .player-btn {
+            background-color: #ff4d7a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+        .player-btn:hover {
+            transform: scale(1.1);
+        }
+        .minimize-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #ff4d7a;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        
+        @media (max-width: 768px) {
+            .memory-box {
+                flex-basis: 45%;
+            }
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .memory-box {
+                flex-basis: 100%;
+            }
+            
+            .birthday-message h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti" id="confetti"></div>
+    
+    <header>
+        <div class="container">
+            <h1>Happy Birthday <span class="heart-icon">❤️</span> My Love <span class="heart-icon">❤️</span></h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="birthday-message">
+            <h1>Happy Birthday!</h1>
+            <p>To the most amazing person in my life. Today is all about celebrating you and all the joy you bring to my world every single day.</p>
+            <p>This special website is just one small way to show you how much you mean to me.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Our Special Memories</h2>
+            <div class="memories">
+                <div class="memory-box">
+                    <div class="memory-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp13.jpg" alt="Photo Memory 1">
+                    </div>
+                    <h3>Our First Date</h3>
+                    <p>Remember when we went to that little café and talked for hours?</p>
+                </div>
+                <div class="memory-box">
+                    <div class="memory-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp3.jpg" alt="Photo Memory 1">
+                    </div>
+                    <h3>Beach Vacation</h3>
+                    <p>That amazing sunset we watched together by the ocean.</p>
+                </div>
+                <div class="memory-box">
+                    <div class="memory-image">
+                        <img src="https://raw.githubusercontent.com/KriME-ai/Love/refs/heads/main/WhatsApp8.jpg" alt="Photo Memory 1">
+                    </div>
+                    <h3>Movie Night</h3>
+                    <p>Our cozy blanket fort and movie marathon weekend!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Reasons Why I Love You</h2>
+            <div class="reasons">
+                <div class="reason">
+                    <p>Your beautiful smile that brightens my darkest days.</p>
+                </div>
+                <div class="reason">
+                    <p>The way you always know exactly what to say to make me feel better.</p>
+                </div>
+                <div class="reason">
+                    <p>Your incredible passion for everything you do.</p>
+                </div>
+                <div class="reason">
+                    <p>How you can make me laugh even when I'm trying to be serious.</p>
+                </div>
+                <div class="reason">
+                    <p>Your kindness and compassion towards everyone you meet.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Our Playlist</h2>
+            <p>Click on a song to play our special music.</p>
+            <div class="playlist">
+                <div class="song" onclick="playSong('Favourite')">
+                    <div class="song-number">1</div>
+                    <div class="song-info">
+                        <strong>"One of your Favourite song"</strong> - Guess
+                    </div>
+                </div>
+                <div class="song" onclick="playSong('romantic')">
+                    <div class="song-number">2</div>
+                    <div class="song-info">
+                        <strong>"Romantic Melody"</strong> - Something Close
+                    </div>
+                </div>
+                <div class="song" onclick="playSong('Arijit')">
+                    <div class="song-number">3</div>
+                    <div class="song-info">
+                        <strong>"Also My Favourite"</strong> - ❤️
+                    </div>
+                </div>
+                <div class="song" onclick="playSong('Atif')">
+                    <div class="song-number">4</div>
+                    <div class="song-info">
+                        <strong>"Also My Favourite"</strong> - ❤️
+                    </div>
+                </div>
+                <div class="song" onclick="playSong('tanmoy')">
+                    <div class="song-number">5</div>
+                    <div class="song-info">
+                        <strong>"Also My Favourite"</strong> - ❤️
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="music-player" id="musicPlayer">
+            <button class="minimize-btn" id="minimizeBtn">—</button>
+            <div class="player-title">Birthday Music</div>
+            <audio id="audioPlayer"></audio>
+            <div class="player-controls">
+                <button class="player-btn" id="prevBtn">⏮</button>
+                <button class="player-btn" id="playPauseBtn">▶</button>
+                <button class="player-btn" id="nextBtn">⏭</button>
+            </div>
+            <div id="nowPlaying">Select a song to play</div>
+        </div>
+        
+        <div class="cake-container">
+            <div class="cake">🎂</div>
+            <h2>Make a wish!</h2>
+            <p>I hope all your birthday wishes come true this year and always.</p>
+        </div>
+        
+        <div style="text-align: center; margin: 50px 0;">
+            <a href="#" class="button">Your Birthday Surprise</a>
+            <a href="#" class="button">Photo Gallery</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Made with all my love for your special day ❤️</p>
+        <p>Happy Birthday, 2025!</p>
+    </footer>
+
+    <script>
+        // Simple confetti effect
+        const confettiContainer = document.getElementById('confetti');
+        const colors = ['#ff6b95', '#ffa1c0', '#ffcad4', '#f3d1f4', '#ffef9f', '#a2d2ff'];
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'absolute';
+            confetti.style.width = Math.random() * 15 + 5 + 'px';
+            confetti.style.height = Math.random() * 8 + 5 + 'px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = -20 + 'px';
+            confetti.style.borderRadius = '50%';
+            confetti.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            confettiContainer.appendChild(confetti);
+            
+            const duration = Math.random() * 3 + 2;
+            const leftMovement = Math.random() * 10 - 5;
+            
+            confetti.animate([
+                { transform: `translateY(0) translateX(0) rotate(0deg)`, opacity: 1 },
+                { transform: `translateY(100vh) translateX(${leftMovement}vw) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ], {
+                duration: duration * 1000,
+                easing: 'linear',
+                fill: 'forwards'
+            });
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, duration * 1000);
+        }
+        
+        // Create confetti at intervals
+        setInterval(createConfetti, 200);
+        
+        // Initial burst of confetti
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createConfetti, i * 50);
+        }
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const musicPlayer = document.getElementById('musicPlayer');
+        const nowPlaying = document.getElementById('nowPlaying');
+
+// Sample music (in a real site, you'd replace these with actual audio files)
+        const songs = {
+            'Favourite': {
+                title: 'Tum Se Hi',
+                src: 'love_song.mp3' // Replace with actual audio URL
+            },
+            'romantic': {
+                title: 'Romantic Melody',
+                src: '' // Replace with actual audio URL
+            },
+            'Arijit': {
+                title: 'Celebration',
+                src: 'https://example.com/upbeat.mp3' // Replace with actual audio URL
+            },
+            'Atif': {
+                title: 'Celebration',
+                src: 'https://example.com/upbeat.mp3'
+            },
+            'tanmoy': {
+                title: 'Celebration',
+                src: 'https://example.com/upbeat.mp3'
+            },
+        };
+
+        let currentSong = '';
+        let isPlaying = false;
+
+// Play a specific song
+        function playSong(songId) {
+            if (songs[songId]) {
+                currentSong = songId;
+                audioPlayer.src = songs[songId].src;
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseBtn.innerHTML = '⏸';
+                nowPlaying.textContent = 'Now playing: ' + songs[songId].title;
+            }
+        }
+
+// Toggle play/pause
+        playPauseBtn.addEventListener('click', () => {
+            if (currentSong === '') {
+        // If no song is selected, play the first one
+            playSong('birthday');
+            return;
+        }
+    
+        if (isPlaying) {
+            audioPlayer.pause();
+            playPauseBtn.innerHTML = '▶';
+        } else {
+            audioPlayer.play();
+            playPauseBtn.innerHTML = '⏸';
+        }
+        isPlaying = !isPlaying;
+    });
+
+// Previous song
+        prevBtn.addEventListener('click', () => {
+            const songIds = Object.keys(songs);
+            const currentIndex = songIds.indexOf(currentSong);
+            const prevIndex = (currentIndex - 1 + songIds.length) % songIds.length;
+            playSong(songIds[prevIndex]);
+        });
+
+// Next song
+        nextBtn.addEventListener('click', () => {
+            const songIds = Object.keys(songs);
+            const currentIndex = songIds.indexOf(currentSong);
+            const nextIndex = (currentIndex + 1) % songIds.length;
+            playSong(songIds[nextIndex]);
+        });
+
+// Minimize/maximize player
+    minimizeBtn.addEventListener('click', () => {
+        musicPlayer.classList.toggle('minimized');
+        minimizeBtn.textContent = musicPlayer.classList.contains('minimized') ? '+' : '—';
+    });
+
+// Start playing birthday song automatically
+        window.addEventListener('load', () => {
+    // Uncomment the line below if you want music to start automatically
+    // playSong('birthday');
+    });
+    </script>
+</body>
+</html>
