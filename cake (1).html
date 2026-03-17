@@ -426,87 +426,6 @@ function allCandlesBlown(){
   }, 300);
 }
 
-/* ── Clap sound ── */
-function playClap(when) {
-  const ctx = getAudioCtx();
-  // white noise burst shaped like a clap
-  const bufLen = Math.floor(ctx.sampleRate * 0.12);
-  const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
-  const data = buf.getChannelData(0);
-  for (let i = 0; i < bufLen; i++) {
-    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufLen, 2.5);
-  }
-  const src  = ctx.createBufferSource();
-  const gain = ctx.createGain();
-  const bpf  = ctx.createBiquadFilter();
-  bpf.type = 'bandpass';
-  bpf.frequency.value = 1200;
-  bpf.Q.value = 0.8;
-  src.buffer = buf;
-  gain.gain.value = 0.55;
-  src.connect(bpf); bpf.connect(gain); gain.connect(ctx.destination);
-  src.start(when);
-}
-
-/* ── Cheer / crowd roar ── */
-function playCheer() {
-  const ctx  = getAudioCtx();
-  const dur  = 3.5;
-  const now  = ctx.currentTime;
-
-  // crowd noise = filtered noise that swells up then fades
-  const bufLen = Math.floor(ctx.sampleRate * dur);
-  const buf  = ctx.createBuffer(2, bufLen, ctx.sampleRate);
-  for (let ch = 0; ch < 2; ch++) {
-    const d = buf.getChannelData(ch);
-    for (let i = 0; i < bufLen; i++) d[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  noise.buffer = buf;
-
-  // shape the crowd roar with a low-pass + gain envelope
-  const lpf  = ctx.createBiquadFilter();
-  lpf.type = 'lowpass';
-  lpf.frequency.value = 900;
-
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0, now);
-  gain.gain.linearRampToValueAtTime(0.28, now + 0.35);   // swell up
-  gain.gain.setValueAtTime(0.28, now + 2.0);             // hold
-  gain.gain.linearRampToValueAtTime(0, now + dur);        // fade out
-
-  noise.connect(lpf); lpf.connect(gain); gain.connect(ctx.destination);
-  noise.start(now);
-  noise.stop(now + dur);
-
-  // add a few "woo!" pitched whoops
-  const whoops = [0.2, 0.55, 0.9, 1.4, 1.8];
-  whoops.forEach((t, i) => {
-    const osc  = ctx.createOscillator();
-    const og   = ctx.createGain();
-    osc.type = 'sine';
-    // pitch slides up like a "woo!"
-    osc.frequency.setValueAtTime(420 + i * 30, now + t);
-    osc.frequency.linearRampToValueAtTime(700 + i * 20, now + t + 0.25);
-    og.gain.setValueAtTime(0, now + t);
-    og.gain.linearRampToValueAtTime(0.18, now + t + 0.05);
-    og.gain.linearRampToValueAtTime(0, now + t + 0.35);
-    osc.connect(og); og.connect(ctx.destination);
-    osc.start(now + t); osc.stop(now + t + 0.4);
-  });
-}
-
-/* ── Applause pattern (rapid claps) ── */
-function playApplause() {
-  const ctx = getAudioCtx();
-  const now = ctx.currentTime;
-  // fire ~30 claps randomly over 2.5 seconds
-  for (let i = 0; i < 30; i++) {
-    const t = now + Math.random() * 2.5;
-    playClap(t);
-  }
-}
-
 /* ── Cake Cut ── */
 let cakeCut = false;
 function cutCake(e){
@@ -518,18 +437,11 @@ function cutCake(e){
   document.getElementById('clickRing').style.display = 'none';
   document.getElementById('cutHint').style.display   = 'none';
 
-  // 🎉 Play cheer + applause immediately on cut
-  playCheer();
-  playApplause();
-
   // show slice with animation
   const sg = document.getElementById('sliceGroup');
   sg.style.display = 'block';
   sg.style.transform = 'translateX(0) translateY(0)';
   setTimeout(()=>{ sg.style.transform='translateX(28px) translateY(12px)'; }, 50);
-
-  // second wave of applause at 1.2s
-  setTimeout(playApplause, 1200);
 
   // show wish panel + confetti
   setTimeout(()=>{
@@ -587,3 +499,4 @@ cakeEl.addEventListener('mouseleave',()=>cur.classList.remove('knife'));
 </script>
 </body>
 </html>
+
